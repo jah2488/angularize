@@ -1,12 +1,20 @@
 angular.module('app.controllers', [])
-.controller('AppCtrl', function($scope, $http) {
-	$scope.message = 'Hello world';
-
-	$http.get('/users/5.json')
+.controller('HomeCtrl', function($scope, $http, $window) {
+	console.log('home ctrl');
+	$http.get('/users.json')
 	.success(function(data) {
 		console.log(data);
 	})
-	.error(function(err) {
+	// Teach about status in error promise
+	.error(function(err, status) {
 		console.log(err);
+		console.log(status);
+		if(status === 401) {
+			$window.location = '/users/sign_in';
+			// $state.go('login');
+		}
 	});
+})
+.controller('LoginCtrl', function($scope, $http) {
+	
 });
